@@ -1,9 +1,8 @@
+import { createBrowserRouter } from "react-router-dom";
 
+const router = createBrowserRouter([
+    {path:'/', element:<MainPage/>},
+    {path:'/', element:<DetailPage/>}
+])
 
-const Layout = () => {
-
-    
-let 지형 = 5;;
-}
-
-export default Layout;
+export default router;

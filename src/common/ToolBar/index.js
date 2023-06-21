@@ -1,13 +1,9 @@
-
-
 const ToolBar = () => {
-
-    return(
-        <>
-        <div>ToolBar입니다.</div>
-        </>
-    )
-    
+	return (
+		<>
+			<div>ToolBar입니다.</div>
+		</>
+	)
 }
 
-export default ToolBar;
+export default ToolBar

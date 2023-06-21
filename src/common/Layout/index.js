@@ -1,8 +1,20 @@
-import { createBrowserRouter } from "react-router-dom";
+import Footer from "common/Footer";
+import Header from "common/Header";
+import ToolBar from "common/ToolBar";
 
-const router = createBrowserRouter([
-    {path:'/', element:<MainPage/>},
-    {path:'/', element:<DetailPage/>}
-])
+const { Outlet } = require("react-router-dom")
 
-export default router;
+
+const Layout = () => {
+    return(
+        //header,toolbar,footer..?
+        <>
+        <Header/>
+        <Outlet />
+        <Footer/>
+        <ToolBar/>
+        </>
+    )
+}
+
+export default Layout;

@@ -3,7 +3,7 @@
 const Layout = () => {
 
     
-dfjlkjalkjlijwlfijli
+let 지형 = 5;;
 }
 
 export default Layout;

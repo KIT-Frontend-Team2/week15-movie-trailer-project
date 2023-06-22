@@ -3,14 +3,9 @@ import styled from 'styled-components'
 import MenuIcon from '@mui/icons-material/Menu'
 import { useSetRecoilState } from 'recoil'
 import { toggleUiAtom } from 'atom/ui.atom'
-import { useNavigate } from 'react-router'
 
 const Header = () => {
 	const setToggle = useSetRecoilState(toggleUiAtom)
-	const navigate = useNavigate()
-	const RootMove = () => {
-		navigate('/')
-	}
 	const ToggleHandling = () => {
 		setToggle(prev => !prev)
 	}
@@ -31,13 +26,9 @@ const Header = () => {
 						backgroundColor: '#F1404B',
 					}}
 				>
-					{/* 
-						@TODO 
-						white color 변환 필요 
-						*/}
-					<S.InnerBox>
-						<MenuIcon onClick={ToggleHandling} sx={{ color: 'white' }} />
-						<S.MenuButton onClick={RootMove}>MENU</S.MenuButton>
+					<S.InnerBox onClick={ToggleHandling}>
+						<MenuIcon sx={{ color: 'white' }} />
+						<S.MenuButton>MENU</S.MenuButton>
 					</S.InnerBox>
 				</Box>
 			</Box>

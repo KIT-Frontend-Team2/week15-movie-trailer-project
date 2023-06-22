@@ -35,11 +35,9 @@ const Header = () => {
 						@TODO 
 						white color 변환 필요 
 						*/}
-					<S.InnerBox >
+					<S.InnerBox>
 						<MenuIcon onClick={ToggleHandling} sx={{ color: 'white' }} />
-						<S.MenuButton onClick={RootMove}>
-							MENU
-						</S.MenuButton>
+						<S.MenuButton onClick={RootMove}>MENU</S.MenuButton>
 					</S.InnerBox>
 				</Box>
 			</Box>
@@ -53,7 +51,7 @@ const InnerBox = styled.div`
 	display: flex;
 	padding: 10px;
 	align-items: center;
-	justify-content: center
+	justify-content: center;
 `
 
 const MenuButton = styled.div`
@@ -61,5 +59,6 @@ const MenuButton = styled.div`
 `
 
 const S = {
-	InnerBox, MenuButton
+	InnerBox,
+	MenuButton,
 }

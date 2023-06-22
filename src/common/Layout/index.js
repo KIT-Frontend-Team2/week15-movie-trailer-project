@@ -30,15 +30,15 @@ const Layout = () => {
 export default Layout
 
 const Wrapper = styled.div`
-width: 100%;
-height: 100vh;
-background-color: #252C41;
+	width: 100%;
+	height: 100vh;
+	background-color: #252c41;
 `
 const Box = styled.div`
-padding-top: 60px;
-margin-left: ${({ showToggle }) => showToggle ? '200px' : '0px'};
-transition: 1s;
-color: white;
+	padding-top: 60px;
+	margin-left: ${({ showToggle }) => (showToggle ? '200px' : '0px')};
+	transition: 1s;
+	color: white;
 `
 
 const S = { Wrapper, Box }

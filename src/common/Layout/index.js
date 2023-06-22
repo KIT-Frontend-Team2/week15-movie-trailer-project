@@ -1,22 +1,44 @@
 import { Container } from '@mui/system'
+import { toggleUiAtom } from 'atom/ui.atom'
 import Footer from 'common/Footer'
 import Header from 'common/Header'
 import ToolBar from 'common/ToolBar'
+import { useRecoilValue } from 'recoil'
+import styled from 'styled-components'
 
 const { Outlet } = require('react-router-dom')
 
 const Layout = () => {
+	const showToggle = useRecoilValue(toggleUiAtom)
+	console.log(showToggle)
 	return (
-		//header,toolbar,footer..?
 		<>
 			<Header />
 			<ToolBar />
-			<Container>
-				<Outlet />
-			</Container>
+			<S.Wrapper>
+				<S.Box showToggle={showToggle}>
+					<Container>
+						<Outlet />
+					</Container>
+				</S.Box>
+			</S.Wrapper>
 			<Footer />
 		</>
 	)
 }
 
 export default Layout
+
+const Wrapper = styled.div`
+width: 100%;
+height: 100vh;
+background-color: #252C41;
+`
+const Box = styled.div`
+padding-top: 60px;
+margin-left: ${({ showToggle }) => showToggle ? '200px' : '0px'};
+transition: 1s;
+color: white;
+`
+
+const S = { Wrapper, Box }

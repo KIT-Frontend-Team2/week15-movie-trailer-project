@@ -3,50 +3,63 @@ import styled from 'styled-components'
 import MenuIcon from '@mui/icons-material/Menu'
 import { useSetRecoilState } from 'recoil'
 import { toggleUiAtom } from 'atom/ui.atom'
+import { useNavigate } from 'react-router'
 
 const Header = () => {
 	const setToggle = useSetRecoilState(toggleUiAtom)
-
+	const navigate = useNavigate()
+	const RootMove = () => {
+		navigate('/')
+	}
 	const ToggleHandling = () => {
 		setToggle(prev => !prev)
 	}
 	return (
-		<HeaderBox>
+		<>
 			<Box
 				sx={{
+					position: 'fixed',
 					width: '100%',
-					height: '45',
-					backgroundColor: 'error.light',
+					height: '45px',
+					backgroundColor: '#F1404B',
 				}}
 			>
 				<Box
 					sx={{
 						width: 200,
-						backgroundColor: 'error.main',
-						'&:hover': {
-							backgroundColor: 'error.main',
-							opacity: [0.9, 0.8, 0.7],
-						},
+						height: '45px',
+						backgroundColor: '#F1404B',
 					}}
 				>
 					{/* 
 						@TODO 
 						white color 변환 필요 
 						*/}
-					<InnerBox onClick={ToggleHandling}>
-						<MenuIcon />
-						Menu
-					</InnerBox>
+					<S.InnerBox >
+						<MenuIcon onClick={ToggleHandling} sx={{ color: 'white' }} />
+						<S.MenuButton onClick={RootMove}>
+							MENU
+						</S.MenuButton>
+					</S.InnerBox>
 				</Box>
 			</Box>
-		</HeaderBox>
+		</>
 	)
 }
 
 export default Header
 
-const HeaderBox = styled.header``
 const InnerBox = styled.div`
 	display: flex;
 	padding: 10px;
+	align-items: center;
+	justify-content: center
 `
+
+const MenuButton = styled.div`
+	color: white;
+`
+
+const S = {
+	InnerBox, MenuButton
+}

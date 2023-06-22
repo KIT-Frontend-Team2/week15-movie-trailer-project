@@ -1,3 +1,4 @@
+import { Container } from '@mui/system'
 import Footer from 'common/Footer'
 import Header from 'common/Header'
 import ToolBar from 'common/ToolBar'
@@ -9,9 +10,11 @@ const Layout = () => {
 		//header,toolbar,footer..?
 		<>
 			<Header />
-			<Outlet />
-			<Footer />
 			<ToolBar />
+			<Container >
+				<Outlet />
+			</Container>
+			<Footer />
 		</>
 	)
 }

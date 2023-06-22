@@ -1,5 +1,4 @@
 import { useParams } from 'react-router-dom'
-import { mock } from '../../__mock__/detail.data'
 import styled from 'styled-components'
 import {
 	Avatar,
@@ -14,6 +13,7 @@ import {
 } from '@mui/material'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import YouTube from 'react-youtube'
+import { mock } from '__mock__/detail.data'
 
 const DetailPage = () => {
 	const { detailId } = useParams()

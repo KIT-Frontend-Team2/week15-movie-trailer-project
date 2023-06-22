@@ -1,10 +1,10 @@
 import router from 'routes/routes'
-import './App.css'
 import { RouterProvider } from 'react-router-dom'
 import { RecoilRoot } from 'recoil'
 import { ThemeProvider } from 'styled-components'
 import GlobalStyles from 'styles/global'
 import theme from 'styles/theme'
+import './App.css'
 
 function App() {
 	const routing = router

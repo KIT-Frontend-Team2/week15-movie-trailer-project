@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom'
+
 import { mock } from '../../__mock__/detail.data'
 import styled from 'styled-components'
 import {

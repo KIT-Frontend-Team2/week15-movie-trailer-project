@@ -1,15 +1,11 @@
-import { Container } from '@mui/material'
-import { useParams } from 'react-router-dom'
+import { Container } from '@mui/system'
+import { selectApiTypeAtom } from 'atom/ui.atom'
+import MainBanner from 'components/Main/MainBanner'
+import { useRecoilValue } from 'recoil'
 
 const MainPage = () => {
-	const { MainId } = useParams()
-
-	console.log({ MainId })
-	return (
-		<Container>
-			<div>메인페이지입니다. </div>
-		</Container>
-	)
+	const isMain = useRecoilValue(selectApiTypeAtom)
+	return <Container>{isMain && <MainBanner />}</Container>
 }
 
 export default MainPage

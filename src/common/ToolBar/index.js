@@ -1,7 +1,6 @@
-import { Box } from "@mui/material"
-import { toggleUiAtom } from "atom/ui.atom"
-import { useRecoilValue } from "recoil"
-
+import { Box } from '@mui/material'
+import { toggleUiAtom } from 'atom/ui.atom'
+import { useRecoilValue } from 'recoil'
 
 const ToolBar = () => {
 	const showToggle = useRecoilValue(toggleUiAtom)
@@ -19,7 +18,7 @@ const ToolBar = () => {
 				}}
 			>
 				<div style={{ color: 'white' }}>ddd</div>
-			</Box >
+			</Box>
 		</>
 	)
 }

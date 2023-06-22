@@ -1,8 +1,8 @@
-import Box from '@mui/material/Box';
-import styled from 'styled-components';
-import MenuIcon from '@mui/icons-material/Menu';
-import { useSetRecoilState } from 'recoil';
-import { toggleUiAtom } from 'atom/ui.atom';
+import Box from '@mui/material/Box'
+import styled from 'styled-components'
+import MenuIcon from '@mui/icons-material/Menu'
+import { useSetRecoilState } from 'recoil'
+import { toggleUiAtom } from 'atom/ui.atom'
 
 const Header = () => {
 	const setToggle = useSetRecoilState(toggleUiAtom)
@@ -29,13 +29,14 @@ const Header = () => {
 						},
 					}}
 				>
-					{
-						/* 
+					{/* 
 						@TODO 
 						white color 변환 필요 
-						*/
-					}
-					<InnerBox onClick={ToggleHandling}><MenuIcon />Menu</InnerBox>
+						*/}
+					<InnerBox onClick={ToggleHandling}>
+						<MenuIcon />
+						Menu
+					</InnerBox>
 				</Box>
 			</Box>
 		</HeaderBox>
@@ -44,12 +45,8 @@ const Header = () => {
 
 export default Header
 
-
-const HeaderBox = styled.header`
-
-`
+const HeaderBox = styled.header``
 const InnerBox = styled.div`
-display: flex;
-padding: 10px;
-
+	display: flex;
+	padding: 10px;
 `

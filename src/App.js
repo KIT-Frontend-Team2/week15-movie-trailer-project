@@ -9,7 +9,8 @@ function App() {
 	return (
 		<RecoilRoot>
 			<RouterProvider router={routing} />
-		</RecoilRoot>)
+		</RecoilRoot>
+	)
 }
 
 export default App

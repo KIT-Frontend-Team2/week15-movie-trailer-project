@@ -1,4 +1,3 @@
-import { Container } from '@mui/system'
 import { toggleUiAtom } from 'atom/ui.atom'
 import Footer from 'common/Footer'
 import Header from 'common/Header'
@@ -17,9 +16,7 @@ const Layout = () => {
 			<ToolBar />
 			<S.Wrapper>
 				<S.Box showToggle={showToggle}>
-					<Container>
-						<Outlet />
-					</Container>
+					<Outlet />
 				</S.Box>
 			</S.Wrapper>
 			<Footer />

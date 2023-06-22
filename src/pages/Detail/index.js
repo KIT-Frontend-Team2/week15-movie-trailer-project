@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom'
 
 const DetailPage = () => {
-	const { DetaId } = useParams()
-	console.log({ DetaId })
+	const { detailId } = useParams()
+	console.log({ detailId })
 
 	return (
 		<>

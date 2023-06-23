@@ -13,7 +13,7 @@ export const useGetList = API_KEY => {
 
 export const useSearchKeyWord = KEY_WORD => {
 	const { data, isLoading } = useQuery(
-		[API_KEY],
+		[KEY_WORD],
 		() => MOVIE_API.getSearchWithKeyWord(KEY_WORD),
 		queryConfig,
 	)

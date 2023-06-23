@@ -14,11 +14,27 @@ import {
 } from '@mui/material'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import YouTube from 'react-youtube'
-import { mock } from '__mock__/detail.data'
+import { useQuery } from '@tanstack/react-query'
+import { fetchMovieDetail } from 'apis/DetailMovie/fetchMovieDetail'
 
 const DetailPage = () => {
 	const { detailId } = useParams()
 	console.log({ detailId })
+
+	const { data, isLoading, isError, error } = useQuery(
+		['movieDetail', detailId],
+		() => fetchMovieDetail(detailId),
+	)
+
+	if (isLoading) {
+		return <div>Loading..</div>
+	}
+
+	if (isError) {
+		return <div>Error: {error.message}</div>
+	}
+
+	console.log(data)
 
 	const {
 		backdrop_path,
@@ -31,7 +47,7 @@ const DetailPage = () => {
 		videos,
 		images,
 		reviews,
-	} = mock
+	} = data
 	const base_url = 'http://image.tmdb.org/t/p/'
 	const img_size = 'original'
 	const img_src = `${base_url}${img_size}${backdrop_path}`
@@ -226,7 +242,7 @@ const MovieFrame = styled.div`
 	div {
 		position: absolute;
 		inset: 0;
-		aspect-radio: 16 / 9;
+		aspect-ratio: 16 / 9;
 
 		iframe {
 			width: 100%;

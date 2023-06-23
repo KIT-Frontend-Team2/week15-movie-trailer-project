@@ -5,18 +5,21 @@ import { useSetRecoilState } from 'recoil'
 import { toggleUiAtom } from 'atom/ui.atom'
 import { IconButton } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
+import { useNavigate } from 'react-router-dom'
 import { useRef } from 'react'
 const Header = () => {
 	const setToggle = useSetRecoilState(toggleUiAtom)
+	const navigate = useNavigate()
+	const inputRef = useRef('')
 	const ToggleHandling = () => {
 		setToggle(prev => !prev)
 	}
 
-	const inputRef = useRef()
 
-	const searchKeyword = e => {
-		e.preventDefault()
-		const searchKey = inputRef.current.value
+	const searchKeyword = (e) => {
+		e.preventDefault();
+		const keyWord = inputRef.current.value
+		navigate('/search/' + keyWord)
 	}
 	return (
 		<>

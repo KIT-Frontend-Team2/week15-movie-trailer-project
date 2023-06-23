@@ -1,15 +1,13 @@
-import axios from 'axios'
 
-const { axiosInstance } = require('apis/@core')
+const { axiosInstance, searchAxios } = require('apis/@core')
 
-const SEARCH_URL = 'https://api.themoviedb.org/3/search/movie'
 
 const getList = API_KEY => {
 	return axiosInstance.get(API_KEY)
 }
 
 const getSearchWithKeyWord = query => {
-	return axios.get(SEARCH_URL, {
+	return searchAxios.get('', {
 		params: {
 			query,
 		},

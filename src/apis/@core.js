@@ -5,5 +5,5 @@ export const axiosInstance = axios.create({
 	headers: {
 		Authorization: 'Bearer ' + process.env.REACT_APP_ACCESS_TOKEN,
 	},
-	withCredentials: true,
+	// withCredentials: true,
 })

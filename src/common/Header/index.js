@@ -4,7 +4,7 @@ import MenuIcon from '@mui/icons-material/Menu'
 import { useSetRecoilState } from 'recoil'
 import { toggleUiAtom } from 'atom/ui.atom'
 import { IconButton } from '@mui/material'
-import SearchIcon from '@mui/icons-material/Search';
+import SearchIcon from '@mui/icons-material/Search'
 import { useRef } from 'react'
 const Header = () => {
 	const setToggle = useSetRecoilState(toggleUiAtom)
@@ -14,8 +14,8 @@ const Header = () => {
 
 	const inputRef = useRef()
 
-	const searchKeyword = (e) => {
-		e.preventDefault();
+	const searchKeyword = e => {
+		e.preventDefault()
 		const searchKey = inputRef.current.value
 	}
 	return (
@@ -47,7 +47,7 @@ const Header = () => {
 						<SearchIcon />
 					</IconButton>
 					<SearchBox>
-						<SearchBar ref={inputRef} type='text' />
+						<SearchBar ref={inputRef} type="text" />
 					</SearchBox>
 				</SearchContainer>
 			</Box>
@@ -58,19 +58,19 @@ const Header = () => {
 export default Header
 
 const SearchContainer = styled.form`
-display: flex;
-align-items: center;
+	display: flex;
+	align-items: center;
 `
 
 const SearchBar = styled.input`
-background-color: inherit;
-border: none;
-outline: none;
+	background-color: inherit;
+	border: none;
+	outline: none;
 `
 
 const SearchBox = styled.div`
-padding: 5px;
-border: 1px solid black;
+	padding: 5px;
+	border: 1px solid black;
 `
 
 const InnerBox = styled.div`

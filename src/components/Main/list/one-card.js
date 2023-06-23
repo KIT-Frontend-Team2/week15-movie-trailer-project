@@ -5,42 +5,44 @@ import styled from 'styled-components'
 import useDetailNavigate from 'hooks/use-detail-navigate'
 
 const OneCard = ({ id, title, poster_path, vote_average, overview }) => {
-
-    const navigate = useDetailNavigate()
-    const url = TMDB_URL + poster_path
-    return (
-        <Card onClick={() => navigate(id)} sx={{ minWidth: 150, overflow: 'initial' }}>
-            <CardInner>
-                <Chip
-                    label={
-                        <Rating
-                            name="read-only"
-                            value={vote_average / 2}
-                            readOnly
-                            emptyIcon={
-                                <StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />
-                            }
-                        />
-                    }
-                    sx={{
-                        zIndex: 8,
-                        position: 'absolute',
-                        background: 'white',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)',
-                    }}
-                    variant="outlined"
-                />
-                <CardBox>
-                    <CardMedia component="img" image={url} />
-                </CardBox>
-                <HoverIntroduce className="hoverComponent">
-                    <IntroduceTitle>{title}</IntroduceTitle>
-                    <IntroduceOverview>{overview}</IntroduceOverview>
-                </HoverIntroduce>
-            </CardInner>
-        </Card>
-    )
+	const navigate = useDetailNavigate()
+	const url = TMDB_URL + poster_path
+	return (
+		<Card
+			onClick={() => navigate(id)}
+			sx={{ minWidth: 150, overflow: 'initial' }}
+		>
+			<CardInner>
+				<Chip
+					label={
+						<Rating
+							name="read-only"
+							value={vote_average / 2}
+							readOnly
+							emptyIcon={
+								<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />
+							}
+						/>
+					}
+					sx={{
+						zIndex: 8,
+						position: 'absolute',
+						background: 'white',
+						left: '50%',
+						transform: 'translate(-50%, -50%)',
+					}}
+					variant="outlined"
+				/>
+				<CardBox>
+					<CardMedia component="img" image={url} />
+				</CardBox>
+				<HoverIntroduce className="hoverComponent">
+					<IntroduceTitle>{title}</IntroduceTitle>
+					<IntroduceOverview>{overview}</IntroduceOverview>
+				</HoverIntroduce>
+			</CardInner>
+		</Card>
+	)
 }
 
 export default OneCard
@@ -68,7 +70,7 @@ const IntroduceTitle = styled.h5`
 const IntroduceOverview = styled.span`
 	white-space: nowrap;
 	overflow: hidden;
-    margin-top: 10px;
+	margin-top: 10px;
 	text-overflow: ellipsis;
 `
 

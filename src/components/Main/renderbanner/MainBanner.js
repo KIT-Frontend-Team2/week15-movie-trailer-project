@@ -28,14 +28,32 @@ const MainBanner = ({ posters }) => {
 				className="mySwiper"
 			>
 				{posters.map((poster, index) => {
-					const { id, poster_path, backdrop_path, title, overview, release_date } = poster
+					const {
+						id,
+						poster_path,
+						backdrop_path,
+						title,
+						overview,
+						release_date,
+					} = poster
 					const back_url = TMDB_URL + backdrop_path
 					const post_url = TMDB_URL + poster_path
 					return (
 						<SwiperSlide key={index}>
 							<BackGround img_src={back_url} />
 							<InnerBox>
-								<CardMedia onClick={() => { navigate(id) }} component="img" image={post_url} sx={{ minWidth: '200px', maxWidth: '400px', cursor: 'pointer' }} />
+								<CardMedia
+									onClick={() => {
+										navigate(id)
+									}}
+									component="img"
+									image={post_url}
+									sx={{
+										minWidth: '200px',
+										maxWidth: '400px',
+										cursor: 'pointer',
+									}}
+								/>
 								<TextMedia>
 									<IntroduceText>
 										<div>
@@ -50,9 +68,7 @@ const MainBanner = ({ posters }) => {
 					)
 				})}
 			</Swiper>
-			<TitleHeader>
-				{typeSelect.split('/')[1] + ' MOVIES'}
-			</TitleHeader>
+			<TitleHeader>{typeSelect.split('/')[1] + ' MOVIES'}</TitleHeader>
 		</>
 	)
 }
@@ -60,57 +76,56 @@ const MainBanner = ({ posters }) => {
 export default MainBanner
 
 const TextMedia = styled.div`
-margin-left: 30px;
+	margin-left: 30px;
 `
 
 const IntroduceText = styled.div`
-display: flex;
-color: white;
-text-align: start;
-flex-direction: column;
-height: 100%;
-line-height: 32px;
-justify-content: space-between;
-	div{
+	display: flex;
+	color: white;
+	text-align: start;
+	flex-direction: column;
+	height: 100%;
+	line-height: 32px;
+	justify-content: space-between;
+	div {
 		margin: 5px 0 5px 0;
 	}
 `
 
-
 const TitleText = styled.div`
-font-size: 32px;
-font-weight: bold;
-color: rgba(255,255,255,0.8);
+	font-size: 32px;
+	font-weight: bold;
+	color: rgba(255, 255, 255, 0.8);
 `
 
 const OverViewText = styled.div`
-font-size: 16px;
-color: rgba(255,255,255,0.7);
+	font-size: 16px;
+	color: rgba(255, 255, 255, 0.7);
 `
 
 const MakeDateText = styled.div`
-font-size: 12px;
-color: rgba(255,255,255,0.5);
+	font-size: 12px;
+	color: rgba(255, 255, 255, 0.5);
 `
 
 const InnerBox = styled.div`
-position: absolute;
-width: 100%;
-height: 100%;
-top: 0;
-left: 0;
-padding: 40px;
-display: flex;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	padding: 40px;
+	display: flex;
 
-img{
-	transition: 1s;
-}
-
-:hover{
 	img {
-		transform: scale(1.02);
+		transition: 1s;
 	}
-}
+
+	:hover {
+		img {
+			transform: scale(1.02);
+		}
+	}
 `
 
 const BackGround = styled.div`

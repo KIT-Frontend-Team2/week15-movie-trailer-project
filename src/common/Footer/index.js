@@ -13,7 +13,7 @@ const Footer = () => {
 					zIndex: 10,
 				}}
 			>
-				<S.InnerBox >
+				<S.InnerBox>
 					<UserProfile gitID={'101887549'} name={'Peter'} />
 					<UserProfile gitID={'123462812'} name={'Jung Ji Hyune'} />
 					<UserProfile gitID={'115636461'} name={'Ji Hyeong Lee'} />
@@ -31,7 +31,7 @@ const InnerBox = styled.div`
 	display: flex;
 	padding: 10px;
 	align-items: center;
-	justify-content: center
+	justify-content: center;
 `
 
 const MenuButton = styled.div`

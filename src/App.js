@@ -5,15 +5,20 @@ import { ThemeProvider } from 'styled-components'
 import GlobalStyles from 'styles/global'
 import theme from 'styles/theme'
 import './App.css'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 function App() {
-	const routing = router
+	const queryClient = new QueryClient({
+		refetchOnMount: false,
+	})
 
 	return (
 		<RecoilRoot>
 			<ThemeProvider theme={theme}>
-				<GlobalStyles />
-				<RouterProvider router={routing} />
+				<QueryClientProvider client={queryClient}>
+					<GlobalStyles />
+					<RouterProvider router={router} />
+				</QueryClientProvider>
 			</ThemeProvider>
 		</RecoilRoot>
 	)

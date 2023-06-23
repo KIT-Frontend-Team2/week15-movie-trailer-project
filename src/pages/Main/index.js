@@ -1,11 +1,12 @@
 import { Container } from '@mui/system'
-import { selectApiTypeAtom } from 'atom/ui.atom'
-import MainBanner from 'components/Main/MainBanner'
-import { useRecoilValue } from 'recoil'
+import CardList from 'components/Main/list/card-list'
 
 const MainPage = () => {
-	const isMain = useRecoilValue(selectApiTypeAtom)
-	return <Container>{isMain && <MainBanner />}</Container>
+	return (
+		<Container>
+			<CardList />
+		</Container>
+	)
 }
 
 export default MainPage

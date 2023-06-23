@@ -15,14 +15,15 @@ const Header = () => {
 				sx={{
 					position: 'fixed',
 					width: '100%',
-					height: '45px',
+					height: '50px',
 					backgroundColor: '#F1404B',
+					zIndex: 10,
 				}}
 			>
 				<Box
 					sx={{
 						width: 200,
-						height: '45px',
+						height: '50px',
 						backgroundColor: '#F1404B',
 					}}
 				>
@@ -40,7 +41,7 @@ export default Header
 
 const InnerBox = styled.div`
 	display: flex;
-	padding: 10px;
+	line-height: 50px;
 	align-items: center;
 	justify-content: center;
 `

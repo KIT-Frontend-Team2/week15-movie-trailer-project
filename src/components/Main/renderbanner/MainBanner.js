@@ -4,7 +4,8 @@ import { Autoplay, Pagination } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import 'App.css'
-const MainBanner = () => {
+import TMDB_URL from 'consts/tmdbUrl'
+const MainBanner = ({ posters }) => {
 	return (
 		<MainBox>
 			<LeftSection>
@@ -30,11 +31,16 @@ const MainBanner = () => {
 						modules={[Autoplay, Pagination]}
 						className="mySwiper"
 					>
-						<SwiperSlide>Slide 1</SwiperSlide>
-						<SwiperSlide>Slide 2</SwiperSlide>
-						<SwiperSlide>Slide 3</SwiperSlide>
-						<SwiperSlide>Slide 4</SwiperSlide>
-						<SwiperSlide>Slide 5</SwiperSlide>
+						{posters.map((poster, index) => {
+							const { id, backdrop_path, title } = poster
+							const url = TMDB_URL + backdrop_path
+							return (
+								<SwiperSlide key={index}>
+									<SlideImage src={url} alt={id} />
+									<SlideTitle>{title}</SlideTitle>
+								</SwiperSlide>
+							)
+						})}
 					</Swiper>
 				</>
 			</RightSection>
@@ -45,9 +51,7 @@ const MainBanner = () => {
 export default MainBanner
 
 const MainBox = styled.div`
-	margin-top: 50px;
 	display: flex;
-	height: 300px;
 `
 
 const LeftSection = styled.div`
@@ -58,17 +62,28 @@ const RightSection = styled.div`
 	width: 60%;
 `
 
-const Title = styled.h5`
+const Title = styled.div`
 	font-size: 80px;
 	font-weight: bold;
 	margin: 20px 0 20px 0;
 `
 
-const IntroduceSite = styled.p`
+const IntroduceSite = styled.div`
 	font-size: 32px;
 `
-const SiteMessage = styled.p`
+const SiteMessage = styled.div`
 	color: gray;
 	font-size: 24;
 	margin: 40px 0 20px 0;
+`
+const SlideTitle = styled.div`
+	position: absolute;
+	bottom: 30px;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: white;
+`
+const SlideImage = styled.img`
+	position: relative;
+	z-index: 0;
 `

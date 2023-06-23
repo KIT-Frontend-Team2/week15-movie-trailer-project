@@ -1,6 +1,4 @@
-
 const { axiosInstance, searchAxios } = require('apis/@core')
-
 
 const getList = API_KEY => {
 	return axiosInstance.get(API_KEY)

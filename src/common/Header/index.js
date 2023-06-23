@@ -15,9 +15,8 @@ const Header = () => {
 		setToggle(prev => !prev)
 	}
 
-
-	const searchKeyword = (e) => {
-		e.preventDefault();
+	const searchKeyword = e => {
+		e.preventDefault()
 		const keyWord = inputRef.current.value
 		navigate('/search/' + keyWord)
 	}

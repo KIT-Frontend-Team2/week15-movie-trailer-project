@@ -3,6 +3,7 @@ import Footer from 'common/Footer'
 import Header from 'common/Header'
 import ToolBar from 'common/ToolBar'
 import API_KEYWORD from 'consts/apiKeyword'
+import useDetailLocation from 'hooks/use-detail-location'
 import { useEffect } from 'react'
 import { useRecoilValue } from 'recoil'
 import styled from 'styled-components'
@@ -12,6 +13,7 @@ const { Outlet, useNavigate } = require('react-router-dom')
 const Layout = () => {
 	const showToggle = useRecoilValue(toggleUiAtom)
 	const navigate = useNavigate()
+	const isDetail = useDetailLocation()
 
 	useEffect(() => {
 		navigate(API_KEYWORD.POPULAR)
@@ -21,7 +23,7 @@ const Layout = () => {
 			<Header />
 			<ToolBar />
 			<S.Wrapper>
-				<S.Box showToggle={showToggle}>
+				<S.Box isDetail={isDetail} showToggle={showToggle}>
 					<Outlet />
 				</S.Box>
 			</S.Wrapper>
@@ -38,7 +40,7 @@ const Wrapper = styled.div`
 	background-color: #252c41;
 `
 const Box = styled.div`
-	padding-top: 60px;
+	padding-top: ${({ isDetail }) => (isDetail ? '0' : '60px')};
 	margin-left: ${({ showToggle }) => (showToggle ? '200px' : '0px')};
 	transition: 1s;
 	color: white;

@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
+import 'swiper/css/effect-fade'
+import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'App.css'
 import TMDB_URL from 'consts/tmdbUrl'
@@ -8,15 +10,16 @@ import { CardMedia } from '@mui/material'
 import { selectApiTypeAtom } from 'atom/ui.atom'
 import { useRecoilValue } from 'recoil'
 import useDetailNavigate from 'hooks/use-detail-navigate'
+import { Autoplay, EffectFade, Pagination } from 'swiper'
+
 const MainBanner = ({ posters }) => {
 	const typeSelect = useRecoilValue(selectApiTypeAtom)
 	const navigate = useDetailNavigate()
-	console.log(posters)
 	return (
 		<>
 			<Swiper
 				spaceBetween={30}
-				centeredSlides={true}
+				effect={'fade'}
 				autoplay={{
 					delay: 5000,
 					disableOnInteraction: false,
@@ -24,7 +27,7 @@ const MainBanner = ({ posters }) => {
 				pagination={{
 					clickable: true,
 				}}
-				// modules={[Autoplay, Pagination]}
+				modules={[Autoplay, EffectFade, Pagination]}
 				className="mySwiper"
 			>
 				{posters.map((poster, index) => {
@@ -101,6 +104,12 @@ const TitleText = styled.div`
 const OverViewText = styled.div`
 	font-size: 16px;
 	color: rgba(255, 255, 255, 0.7);
+	text-overflow: ellipsis;
+	overflow: hidden;
+	word-break: break-word;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
 `
 
 const MakeDateText = styled.div`
@@ -119,6 +128,7 @@ const InnerBox = styled.div`
 
 	img {
 		transition: 1s;
+		width: auto !important;
 	}
 
 	:hover {
@@ -127,6 +137,13 @@ const InnerBox = styled.div`
 		}
 	}
 `
+
+/**
+ * TODO
+ * img 태그 width 100% 지우기
+ * 슬라이드 페이드인으로 바꾸기
+ *
+ * */
 
 const BackGround = styled.div`
 	position: relative;

@@ -1,13 +1,20 @@
 import { Container } from '@mui/system'
-import { useSearchKeyWord } from 'hooks/querys/use-main-query'
-import { useParams } from 'react-router-dom'
+import CardList from 'components/Search/list/card-list'
+import styled from 'styled-components'
 
 const SearchPage = () => {
-	const { keyword } = useParams()
-	const { data } = useSearchKeyWord(keyword)
-
-	console.log(data)
-	return <Container></Container>
+	return (
+		<Wrapper>
+			<Container>
+				<CardList />
+			</Container>
+		</Wrapper>
+	)
 }
 
 export default SearchPage
+
+const Wrapper = styled.div`
+	width: 100%;
+	min-height: calc(100vh - 135px);
+`

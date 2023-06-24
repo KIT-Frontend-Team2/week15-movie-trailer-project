@@ -1,12 +1,12 @@
-import { Container } from '@mui/system'
-import CardList from 'components/Main/list/card-list'
+import API_KEYWORD from 'consts/apiKeyword'
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const MainPage = () => {
-	return (
-		<Container>
-			<CardList />
-		</Container>
-	)
+	const navigate = useNavigate()
+	useEffect(() => {
+		navigate(API_KEYWORD.POPULAR)
+	}, [])
 }
 
 export default MainPage

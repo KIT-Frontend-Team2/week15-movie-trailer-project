@@ -4,18 +4,16 @@ import { useRecoilValue } from 'recoil'
 import MainBanner from '../renderbanner/MainBanner'
 import OneCard from './one-card'
 import { Box, Grid } from '@mui/material'
+import randomArray from 'utils/random-array-index-helper'
 
 const CardList = () => {
 	const selectApiKeyword = useRecoilValue(selectApiTypeAtom)
 	const { data, isLoading } = useGetList(selectApiKeyword)
 	if (isLoading && !data) return <div>로딩중</div>
 	const list = data.data.results
-	const selectRandomPoster = list.length
 	const slideCount = 5
-	const posters = new Array(slideCount)
-		.fill()
-		.map(() => list[parseInt(Math.floor(Math.random() * selectRandomPoster))])
-
+	const posters = randomArray(list, slideCount)
+	console.log(posters)
 	return (
 		<>
 			<MainBanner posters={posters} />

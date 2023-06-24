@@ -5,15 +5,22 @@ import MainBanner from '../renderbanner/MainBanner'
 import OneCard from './one-card'
 import { Box, Grid } from '@mui/material'
 import randomArray from 'utils/random-array-index-helper'
+import { useNavigate } from 'react-router-dom'
+import API_KEYWORD from 'consts/apiKeyword'
+import { useEffect } from 'react'
 
 const CardList = () => {
+	const navigate = useNavigate()
+	useEffect(() => {
+		navigate(API_KEYWORD.POPULAR)
+	}, [])
+
 	const selectApiKeyword = useRecoilValue(selectApiTypeAtom)
 	const { data, isLoading } = useGetList(selectApiKeyword)
 	if (isLoading && !data) return <div>로딩중</div>
 	const list = data.data.results
 	const slideCount = 5
 	const posters = randomArray(list, slideCount)
-	console.log(posters)
 	return (
 		<>
 			<MainBanner posters={posters} />

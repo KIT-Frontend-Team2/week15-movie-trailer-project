@@ -2,6 +2,7 @@ import { toggleUiAtom } from 'atom/ui.atom'
 import Footer from 'common/Footer'
 import Header from 'common/Header'
 import ToolBar from 'common/ToolBar'
+import ScrollUp from 'components/Main/scroll/scrollUp'
 import { useRecoilValue } from 'recoil'
 import styled from 'styled-components'
 
@@ -18,6 +19,7 @@ const Layout = () => {
 					<Outlet />
 				</S.Box>
 			</S.Wrapper>
+			<ScrollUp />
 			<Footer />
 		</>
 	)

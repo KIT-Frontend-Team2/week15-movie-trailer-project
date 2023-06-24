@@ -2,22 +2,17 @@ import { toggleUiAtom } from 'atom/ui.atom'
 import Footer from 'common/Footer'
 import Header from 'common/Header'
 import ToolBar from 'common/ToolBar'
-import API_KEYWORD from 'consts/apiKeyword'
+import ScrollUp from 'components/Main/scroll/scrollUp'
 import useDetailLocation from 'hooks/use-detail-location'
-import { useEffect } from 'react'
 import { useRecoilValue } from 'recoil'
 import styled from 'styled-components'
 
-const { Outlet, useNavigate } = require('react-router-dom')
+const { Outlet } = require('react-router-dom')
 
 const Layout = () => {
 	const showToggle = useRecoilValue(toggleUiAtom)
 	const navigate = useNavigate()
 	const isDetail = useDetailLocation()
-
-	useEffect(() => {
-		navigate(API_KEYWORD.POPULAR)
-	}, [])
 	return (
 		<>
 			<Header />
@@ -27,6 +22,7 @@ const Layout = () => {
 					<Outlet />
 				</S.Box>
 			</S.Wrapper>
+			<ScrollUp />
 			<Footer />
 		</>
 	)

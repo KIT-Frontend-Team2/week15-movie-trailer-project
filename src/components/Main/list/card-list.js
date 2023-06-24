@@ -4,18 +4,23 @@ import { useRecoilValue } from 'recoil'
 import MainBanner from '../renderbanner/MainBanner'
 import OneCard from './one-card'
 import { Box, Grid } from '@mui/material'
+import randomArray from 'utils/random-array-index-helper'
+import { useNavigate } from 'react-router-dom'
+import API_KEYWORD from 'consts/apiKeyword'
+import { useEffect } from 'react'
 
 const CardList = () => {
+	const navigate = useNavigate()
+	useEffect(() => {
+		navigate(API_KEYWORD.POPULAR)
+	}, [])
+
 	const selectApiKeyword = useRecoilValue(selectApiTypeAtom)
 	const { data, isLoading } = useGetList(selectApiKeyword)
 	if (isLoading && !data) return <div>로딩중</div>
 	const list = data.data.results
-	const selectRandomPoster = list.length
 	const slideCount = 5
-	const posters = new Array(slideCount)
-		.fill()
-		.map(() => list[parseInt(Math.floor(Math.random() * selectRandomPoster))])
-
+	const posters = randomArray(list, slideCount)
 	return (
 		<>
 			<MainBanner posters={posters} />

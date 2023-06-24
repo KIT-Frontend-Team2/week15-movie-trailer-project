@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom'
+
 import styled from 'styled-components'
 import {
 	Avatar,
@@ -226,7 +227,6 @@ const BackGround = styled.div`
 		left: 0;
 		bottom: 0;
 		right: 0;
-		/* background-color: rgba(0, 0, 0, 0.5); */
 		background: linear-gradient(
 			180deg,
 			rgba(0, 0, 0, 0.4) 0%,

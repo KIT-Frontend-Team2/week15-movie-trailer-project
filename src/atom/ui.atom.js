@@ -8,5 +8,5 @@ export const toggleUiAtom = atom({
 
 export const selectApiTypeAtom = atom({
 	key: 'selectApiTypeAtom',
-	default: API_KEYWORD.NOW_PLAYING,
+	default: API_KEYWORD.POPULAR,
 })

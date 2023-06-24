@@ -7,7 +7,9 @@ import { IconButton } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import { useNavigate } from 'react-router-dom'
 import { useRef } from 'react'
+import useDetailLocation from 'hooks/use-detail-location'
 const Header = () => {
+	const isDetail = useDetailLocation()
 	const setToggle = useSetRecoilState(toggleUiAtom)
 	const navigate = useNavigate()
 	const inputRef = useRef('')
@@ -27,16 +29,15 @@ const Header = () => {
 					position: 'fixed',
 					width: '100%',
 					height: '50px',
-					backgroundColor: '#F1404B',
+					backgroundColor: isDetail ? 'transparent' : '#F1404B',
 					display: 'flex',
-					zIndex: 10,
+					zIndex: 100,
 				}}
 			>
 				<Box
 					sx={{
 						width: 200,
 						height: '50px',
-						backgroundColor: '#F1404B',
 					}}
 				>
 					<S.InnerBox onClick={ToggleHandling}>
@@ -45,10 +46,14 @@ const Header = () => {
 					</S.InnerBox>
 				</Box>
 				<SearchContainer onSubmit={searchKeyword}>
-					<IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+					<IconButton
+						type="button"
+						sx={{ p: '10px', color: isDetail ? '#fff' : '#000' }}
+						aria-label="search"
+					>
 						<SearchIcon />
 					</IconButton>
-					<SearchBox>
+					<SearchBox isDetail={isDetail}>
 						<SearchBar ref={inputRef} type="text" />
 					</SearchBox>
 				</SearchContainer>
@@ -72,7 +77,10 @@ const SearchBar = styled.input`
 
 const SearchBox = styled.div`
 	padding: 5px;
-	border: 1px solid black;
+	border: 1px solid ${({ isDetail }) => (isDetail ? '#fff' : '#000')};
+	input {
+		color: ${({ isDetail }) => (isDetail ? '#fff' : '#000')};
+	}
 `
 
 const InnerBox = styled.div`

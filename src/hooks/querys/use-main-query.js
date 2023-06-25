@@ -4,17 +4,9 @@ import { queryConfig } from './@config'
 
 export const useGetList = API_KEY => {
 	const { data, isLoading } = useQuery([API_KEY], () =>
-		MOVIE_API.getList(API_KEY, pageParam),
+		MOVIE_API.getList(API_KEY),
 	)
-	return {
-		data,
-		error,
-		fetchNextPage,
-		hasNextPage,
-		isFetching,
-		isFetchingNextPage,
-		isLoading,
-	}
+	return { data, isLoading }
 }
 
 export const useSearchKeyWord = KEY_WORD => {

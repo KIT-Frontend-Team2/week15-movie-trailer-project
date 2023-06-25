@@ -18,7 +18,6 @@ const CardList = () => {
 	const selectApiKeyword = useRecoilValue(selectApiTypeAtom)
 	const { data, isLoading } = useGetList(selectApiKeyword)
 	if (isLoading && !data) return <div>로딩중</div>
-	if (error) return <div>error</div>
 	const list = data.data.results
 	const slideCount = 5
 	const posters = randomArray(list, slideCount)

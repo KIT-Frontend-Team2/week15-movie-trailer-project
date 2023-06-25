@@ -16,15 +16,7 @@ const CardList = () => {
 	}, [])
 
 	const selectApiKeyword = useRecoilValue(selectApiTypeAtom)
-	const {
-		data,
-		error,
-		fetchNextPage,
-		hasNextPage,
-		isFetching,
-		isFetchingNextPage,
-		isLoading,
-	} = useGetList(selectApiKeyword)
+	const { data, isLoading } = useGetList(selectApiKeyword)
 	if (isLoading && !data) return <div>로딩중</div>
 	if (error) return <div>error</div>
 	const list = data.data.results
@@ -49,19 +41,6 @@ const CardList = () => {
 						)
 					})}
 				</Grid>
-				<div>
-					<button
-						onClick={() => fetchNextPage()}
-						disabled={!hasNextPage || isFetchingNextPage}
-					>
-						{isFetchingNextPage
-							? 'Loading more...'
-							: hasNextPage
-							? 'Load More'
-							: 'Noting more to load'}
-					</button>
-				</div>
-				<div>{isFetching && !isFetchingNextPage ? 'Fetching...' : null}</div>
 			</Box>
 		</>
 	)

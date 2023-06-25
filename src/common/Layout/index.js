@@ -4,10 +4,9 @@ import Header from 'common/Header'
 import ToolBar from 'common/ToolBar'
 import ScrollUp from 'components/Main/scroll/scrollUp'
 import useDetailLocation from 'hooks/use-detail-location'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import styled from 'styled-components'
-
-const { Outlet } = require('react-router-dom')
 
 const Layout = () => {
 	const showToggle = useRecoilValue(toggleUiAtom)

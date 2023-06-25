@@ -48,12 +48,12 @@ const Header = () => {
 				<SearchContainer onSubmit={searchKeyword}>
 					<IconButton
 						type="button"
-						sx={{ p: '10px', color: isDetail ? '#fff' : '#000' }}
+						sx={{ p: '10px', color: '#fff' }}
 						aria-label="search"
 					>
 						<SearchIcon />
 					</IconButton>
-					<SearchBox isDetail={isDetail}>
+					<SearchBox>
 						<SearchBar ref={inputRef} type="text" />
 					</SearchBox>
 				</SearchContainer>
@@ -77,9 +77,10 @@ const SearchBar = styled.input`
 
 const SearchBox = styled.div`
 	padding: 5px;
-	border: 1px solid ${({ isDetail }) => (isDetail ? '#fff' : '#000')};
+	border: 1px solid #fff;
+	margin-right: 10px;
 	input {
-		color: ${({ isDetail }) => (isDetail ? '#fff' : '#000')};
+		color: #fff;
 	}
 `
 

@@ -19,23 +19,34 @@ import { useQuery } from '@tanstack/react-query'
 import { fetchMovieDetail } from 'apis/DetailMovie/fetchMovieDetail'
 import { useRef, useState } from 'react'
 import TMDB_URL from 'consts/tmdbUrl'
+import {
+	flexBetween,
+	flexBetweenEnd,
+	flexCenter,
+	positionInset,
+} from 'styles/common'
 
 const DetailPage = () => {
-	const [isPlaying, setIsPlaying] = useState(false)
+	const [isPlaying, setIsPlaying] = useState(true)
 	const ref = useRef(null)
-
 	const { detailId } = useParams()
-	const { data, isLoading, isError, error } = useQuery(
-		['movieDetail', detailId],
-		() => fetchMovieDetail(detailId),
+	const { data, isLoading } = useQuery(['movieDetail', detailId], () =>
+		fetchMovieDetail(detailId),
 	)
+
+	const handleClickBtn = () => {
+		if (isPlaying) {
+			ref.current.internalPlayer.pauseVideo()
+		} else {
+			ref.current.internalPlayer.playVideo()
+		}
+		setIsPlaying(!isPlaying)
+	}
+
+	//TODO: 새로고침 시에도 자동재생 되도록 수정
 
 	if (isLoading) {
 		return <div>Loading..</div>
-	}
-
-	if (isError) {
-		return <div>Error: {error.message}</div>
 	}
 
 	const {
@@ -53,38 +64,25 @@ const DetailPage = () => {
 		keywords,
 	} = data
 
-	const backdrop_path_src = `${TMDB_URL}${backdrop_path}`
-	const reviewList = reviews.results.slice(0, 4)
-	const posterList = images.posters.slice(0, 9)
+	const backdrop_path_src = `${TMDB_URL}${backdrop_path}` // 배경 헤더 이미지 (동영상 없을 경우 노출)
+	const reviewList = reviews.results.slice(0, 4) // 리뷰 최대 4개 까지 노출
+	const posterList = images.posters.slice(0, 9) // 포스터 최대 9개 까지 노출
 	const videoId =
 		videos.results.length > 0
 			? videos.results.find(result => result.type === 'Trailer').key
-			: ''
-	const keywordList = keywords.keywords.slice(0, 3)
+			: '' // video Trailer 중에 가장 최신 동영상 가져오기
+	const keywordList = keywords.keywords.slice(0, 3) // 키워드 최대 3개 노출
 	const overviewVideoId =
 		videos.results.length > 0
 			? videos.results
 					.slice()
 					.reverse()
 					.find(result => result.type === 'Trailer').key
-			: ''
-
-	const handleClickBtn = () => {
-		if (isPlaying) {
-			ref.current.internalPlayer.pauseVideo()
-		} else {
-			ref.current.internalPlayer.playVideo()
-		}
-		setIsPlaying(!isPlaying)
-	}
-
-	const onReady = () => {
-		ref.current.internalPlayer.setVolume(20)
-		setIsPlaying(true)
-	}
+			: '' // video Trailer 중에 가장 오래된 동영상 가져오기
 
 	return (
 		<S.Wrapper>
+			{/* 비주얼(영화 트테일러, 영화 정보) 영역 시작 */}
 			<S.Visual>
 				{videoId ? (
 					<S.MovieFrame>
@@ -104,7 +102,6 @@ const DetailPage = () => {
 									modestbranding: 1, // 컨트롤바에 youtube 로고 X
 								},
 							}}
-							onReady={onReady}
 						/>
 					</S.MovieFrame>
 				) : (
@@ -178,13 +175,16 @@ const DetailPage = () => {
 							<S.Keywords>
 								{keywordList.length > 0 &&
 									keywordList.map(keyword => (
-										<Typography>{`#${keyword.name}`}</Typography>
+										<Typography
+											key={keyword.id}
+										>{`#${keyword.name}`}</Typography>
 									))}
 							</S.Keywords>
 						</S.InfoBottom>
 					</S.VisualInfoBox>
 				</S.VisualInfo>
 			</S.Visual>
+			{/* 비주얼 영역 끝 */}
 			<S.Container>
 				<S.Section>
 					{overviewVideoId && (
@@ -227,7 +227,7 @@ const DetailPage = () => {
 											<ListItemAvatar>
 												<Avatar
 													alt="Remy Sharp"
-													src={`${TMDB_URL}${review.author_details.avatar_path}`}
+													src={`${TMDB_URL}/${review.author_details.avatar_path}`}
 												/>
 											</ListItemAvatar>
 											<S.ReviewContent>{review.content}</S.ReviewContent>
@@ -258,18 +258,20 @@ const DetailPage = () => {
 							Write review
 						</Button>
 					</S.SectionInfo>
-					<ImageList sx={{ width: '50%', maxHeight: '600px' }} cols={3}>
-						{posterList.length > 0 &&
-							posterList.map(item => (
-								<ImageListItem key={item.file_path}>
-									<img
-										src={`${TMDB_URL}${item.file_path}?w=161&fit=crop&auto=format`}
-										srcSet={`${TMDB_URL}${item.file_path}?w=161&fit=crop&auto=format&dpr=2 2x`}
-										loading="lazy"
-									/>
-								</ImageListItem>
-							))}
-					</ImageList>
+					<S.SectionInfo>
+						<ImageList sx={{ width: '100%', maxHeight: '600px' }} cols={3}>
+							{posterList.length > 0 &&
+								posterList.map(item => (
+									<ImageListItem key={item.file_path}>
+										<img
+											src={`${TMDB_URL}${item.file_path}?w=161&fit=crop&auto=format`}
+											srcSet={`${TMDB_URL}${item.file_path}?w=161&fit=crop&auto=format&dpr=2 2x`}
+											loading="lazy"
+										/>
+									</ImageListItem>
+								))}
+						</ImageList>
+					</S.SectionInfo>
 				</S.Section>
 			</S.Container>
 		</S.Wrapper>
@@ -279,17 +281,15 @@ export default DetailPage
 
 const Wrapper = styled.div`
 	width: 100%;
-
-	/* background-color: #000; */
-	background: #000 linear-gradient(180deg, #000 40%, #252c41 100%);
 	color: #eee;
 	font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
+	background: #000 linear-gradient(180deg, #000 40%, #252c41 100%);
 `
 
 const Visual = styled.div`
 	position: relative;
 	width: 100%;
-	height: 88vh;
+	min-height: 88vh;
 	max-height: 900px;
 `
 
@@ -302,11 +302,7 @@ const BackGround = styled.div`
 
 	&:before {
 		content: '';
-		position: absolute;
-		top: 0;
-		left: 0;
-		bottom: 0;
-		right: 0;
+		${positionInset}
 		background: linear-gradient(
 			180deg,
 			rgba(0, 0, 0, 0.4) 0%,
@@ -321,8 +317,7 @@ const MovieFrame = styled.div`
 	height: 100%;
 
 	div {
-		position: absolute;
-		inset: 0;
+		${positionInset}
 		overflow: hidden;
 
 		iframe {
@@ -334,8 +329,7 @@ const MovieFrame = styled.div`
 
 	&:before {
 		content: '';
-		position: absolute;
-		inset: 0;
+		${positionInset}
 		z-index: 10;
 		background: linear-gradient(
 			180deg,
@@ -346,12 +340,10 @@ const MovieFrame = styled.div`
 `
 
 const VisualInfo = styled.div`
-	position: absolute;
+	position: relative;
 	z-index: 20;
-	inset: 0;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	${flexCenter}
+	min-height: 88vh;
 `
 const VisualInfoBox = styled.div`
 	width: 80%;
@@ -361,9 +353,7 @@ const VisualInfoBox = styled.div`
 `
 
 const InfoTop = styled.div`
-	display: flex;
-	justify-content: space-between;
-	align-items: flex-end;
+	${flexBetweenEnd}
 	> div {
 		display: flex;
 		gap: 3em;
@@ -372,7 +362,6 @@ const InfoTop = styled.div`
 
 const Score = styled.div`
 	justify-content: flex-end;
-
 	svg {
 		width: 300px;
 		height: 150px;
@@ -397,12 +386,12 @@ const Score = styled.div`
 `
 
 const InfoMiddle = styled.div`
-	display: flex;
-	justify-content: space-between;
+	${flexBetween}
 	padding-top: 40px;
 `
 
 const Title = styled.div`
+	color: #fff;
 	font-size: 96px;
 	font-family: system-ui, -apple-system, Roboto, Oxygen, Ubuntu, Cantarell,
 		'Open Sans', 'Helvetica Neue';
@@ -412,16 +401,12 @@ const Title = styled.div`
 `
 
 const MiddleRight = styled.div`
-	display: flex;
+	${flexBetween}
 	flex-direction: column;
-	justify-content: space-between;
-	align-items: center;
 `
 
 const PlayButton = styled.div`
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	${flexCenter}
 	width: 64px;
 	height: 64px;
 	background-color: #fff;
@@ -445,12 +430,15 @@ const Container = styled.div`
 	width: 1200px;
 	margin: 0 auto;
 	padding-bottom: 10em;
+	@media screen and (max-width: 768px) {
+		width: 100%;
+	}
 `
 
 const Section = styled.div`
-	padding-top: 5em;
+	padding-top: 4em;
 	& + & {
-		padding-top: 10em;
+		padding-top: 8em;
 	}
 	display: flex;
 	gap: 4%;
@@ -462,6 +450,19 @@ const Section = styled.div`
 			width: 100%;
 			height: auto;
 			aspect-ratio: 16 / 9;
+		}
+	}
+
+	@media screen and (max-width: 768px) {
+		flex-direction: column;
+		&:first-child {
+			flex-direction: column-reverse;
+		}
+		gap: 8em;
+
+		> div {
+			width: 100%;
+			padding: 0 30px;
 		}
 	}
 `

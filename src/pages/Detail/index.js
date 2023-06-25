@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom'
 
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import {
 	Avatar,
 	Button,
@@ -25,6 +25,7 @@ import {
 	flexCenter,
 	positionInset,
 } from 'styles/common'
+import { useDevice } from 'hooks/use-device'
 
 const DetailPage = () => {
 	const [isPlaying, setIsPlaying] = useState(true)
@@ -33,6 +34,7 @@ const DetailPage = () => {
 	const { data, isLoading } = useQuery(['movieDetail', detailId], () =>
 		fetchMovieDetail(detailId),
 	)
+	const { isDesktop } = useDevice()
 
 	const handleClickBtn = () => {
 		if (isPlaying) {
@@ -46,7 +48,7 @@ const DetailPage = () => {
 	//TODO: 새로고침 시에도 자동재생 되도록 수정
 
 	if (isLoading) {
-		return <div>Loading..</div>
+		return <S.Skeleton>Loading..</S.Skeleton>
 	}
 
 	const {
@@ -84,7 +86,7 @@ const DetailPage = () => {
 		<S.Wrapper>
 			{/* 비주얼(영화 트테일러, 영화 정보) 영역 시작 */}
 			<S.Visual>
-				{videoId ? (
+				{videoId && isDesktop ? (
 					<S.MovieFrame>
 						{/* 유튜브 프레임 배경 */}
 						<YouTube
@@ -108,8 +110,8 @@ const DetailPage = () => {
 					<BackGround backdrop_path_src={backdrop_path_src}></BackGround>
 				)}
 				<S.VisualInfo>
-					<S.VisualInfoBox>
-						<S.InfoTop>
+					<S.VisualInfoBox isDesktop={isDesktop}>
+						<S.InfoTop isDesktop={isDesktop}>
 							<div>
 								<div>
 									<Typography variant="subtitle2">{status}</Typography>
@@ -122,22 +124,28 @@ const DetailPage = () => {
 									</Typography>
 								</div>
 							</div>
-							<S.Score>
-								<svg>
-									<text textAnchor="end" x="300" y="0">
-										<tspan dy="1em">{Math.round(vote_average * 10) / 10}</tspan>
-									</text>
-								</svg>
-							</S.Score>
+							{isDesktop && (
+								<S.Score>
+									<svg>
+										<text textAnchor="end" x="300" y="0">
+											<tspan dy="1em">
+												{Math.round(vote_average * 10) / 10}
+											</tspan>
+										</text>
+									</svg>
+								</S.Score>
+							)}
 						</S.InfoTop>
-						<S.InfoMiddle>
-							<S.Title>{title}</S.Title>
+						<S.InfoMiddle isDesktop={isDesktop}>
+							<S.Title isDesktop={isDesktop}>{title}</S.Title>
 							<S.MiddleRight>
 								<div>
 									<Rating name="read-only" value={vote_average / 2} readOnly />{' '}
-									<Typography variant="subtitle2">Movie Rate</Typography>
+									{isDesktop && (
+										<Typography variant="subtitle2">Movie Rate</Typography>
+									)}
 								</div>
-								{videoId && (
+								{videoId && isDesktop && (
 									<S.PlayButton>
 										{isPlaying ? (
 											<PauseIcon
@@ -154,7 +162,7 @@ const DetailPage = () => {
 								)}
 							</S.MiddleRight>
 						</S.InfoMiddle>
-						<S.InfoBottom>
+						<S.InfoBottom isDesktop={isDesktop}>
 							<div>
 								<Button
 									variant="contained"
@@ -185,8 +193,8 @@ const DetailPage = () => {
 				</S.VisualInfo>
 			</S.Visual>
 			{/* 비주얼 영역 끝 */}
-			<S.Container>
-				<S.Section>
+			<S.Container isDesktop={isDesktop}>
+				<S.Section isDesktop={isDesktop}>
 					{overviewVideoId && (
 						<YouTube
 							videoId={overviewVideoId}
@@ -209,12 +217,12 @@ const DetailPage = () => {
 						</Typography>
 					</S.SectionInfo>
 				</S.Section>
-				<S.Section>
+				<S.Section isDesktop={isDesktop}>
 					<S.SectionInfo>
 						<Typography variant="h3" gutterBottom>
 							Reviews
 						</Typography>
-						<S.ReviewList>
+						<S.ReviewList isDesktop={isDesktop}>
 							{reviewList.length > 0 ? (
 								reviewList.map(review => (
 									<List
@@ -279,6 +287,13 @@ const DetailPage = () => {
 }
 export default DetailPage
 
+const Skeleton = styled.div`
+	width: 100vw;
+	height: 100vh;
+	background-color: #000;
+	${flexCenter}
+`
+
 const Wrapper = styled.div`
 	width: 100%;
 	color: #eee;
@@ -294,11 +309,12 @@ const Visual = styled.div`
 `
 
 const BackGround = styled.div`
-	position: relative;
+	position: absolute;
 	width: 100%;
 	height: 100%;
 	background-image: url(${({ backdrop_path_src }) => backdrop_path_src});
 	background-size: cover;
+	background-position: center;
 
 	&:before {
 		content: '';
@@ -350,6 +366,12 @@ const VisualInfoBox = styled.div`
 	height: auto;
 	max-width: 1200px;
 	max-height: 90%;
+	${({ isDesktop }) =>
+		!isDesktop &&
+		css`
+			padding-top: 5em;
+			width: 90%;
+		`}
 `
 
 const InfoTop = styled.div`
@@ -358,6 +380,18 @@ const InfoTop = styled.div`
 		display: flex;
 		gap: 3em;
 	}
+	${({ isDesktop }) =>
+		!isDesktop &&
+		css`
+			flex-direction: column-reverse;
+			align-items: flex-start;
+			gap: 1em;
+
+			> div {
+				flex-direction: column;
+				gap: 1em;
+			}
+		`}
 `
 
 const Score = styled.div`
@@ -365,22 +399,22 @@ const Score = styled.div`
 	svg {
 		width: 300px;
 		height: 150px;
-	}
 
-	text {
-		font-weight: 900;
-		paint-order: stroke;
-		stroke: #f6f6f6;
-		stroke-width: 1px;
-		stroke-linecap: butt;
-		stroke-linejoin: miter;
-		fill: rgba(255, 255, 255, 0);
+		text {
+			font-weight: 900;
+			paint-order: stroke;
+			stroke: #f6f6f6;
+			stroke-width: 1px;
+			stroke-linecap: butt;
+			stroke-linejoin: miter;
+			fill: rgba(255, 255, 255, 0);
 
-		tspan {
-			font-size: 140px;
-			font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
-				Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
-				sans-serif;
+			tspan {
+				font-size: 140px;
+				font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+					Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+					sans-serif;
+			}
 		}
 	}
 `
@@ -388,6 +422,13 @@ const Score = styled.div`
 const InfoMiddle = styled.div`
 	${flexBetween}
 	padding-top: 40px;
+	${({ isDesktop }) =>
+		!isDesktop &&
+		css`
+			padding-top: 1em;
+			flex-direction: column;
+			gap: 1em;
+		`}
 `
 
 const Title = styled.div`
@@ -398,6 +439,13 @@ const Title = styled.div`
 	font-weight: 900;
 	max-width: 70%;
 	min-height: 220px;
+	${({ isDesktop }) =>
+		!isDesktop &&
+		css`
+			font-size: 60px;
+			max-width: 100%;
+			line-height: 1.3;
+		`}
 `
 
 const MiddleRight = styled.div`
@@ -419,6 +467,14 @@ const InfoBottom = styled.div`
 	display: flex;
 	align-items: center;
 	gap: 3em;
+	${({ isDesktop }) =>
+		!isDesktop &&
+		css`
+			padding-top: 1em;
+			flex-direction: column-reverse;
+			align-items: flex-start;
+			gap: 1.5em;
+		`}
 `
 
 const Keywords = styled.div`
@@ -427,12 +483,14 @@ const Keywords = styled.div`
 `
 
 const Container = styled.div`
-	width: 1200px;
+	max-width: 1200px;
 	margin: 0 auto;
 	padding-bottom: 10em;
-	@media screen and (max-width: 768px) {
-		width: 100%;
-	}
+	${({ isDesktop }) =>
+		!isDesktop &&
+		css`
+			width: 100%;
+		`}
 `
 
 const Section = styled.div`
@@ -453,24 +511,30 @@ const Section = styled.div`
 		}
 	}
 
-	@media screen and (max-width: 768px) {
-		flex-direction: column;
-		&:first-child {
-			flex-direction: column-reverse;
-		}
-		gap: 8em;
+	${({ isDesktop }) =>
+		!isDesktop &&
+		css`
+			flex-direction: column;
+			&:first-child {
+				flex-direction: column-reverse;
+			}
+			gap: 4em;
 
-		> div {
-			width: 100%;
-			padding: 0 30px;
-		}
-	}
+			& + & {
+				padding-top: 4em;
+			}
+
+			> div {
+				width: 100%;
+				padding: 0 20px;
+			}
+		`}
 `
 
 const SectionInfo = styled.div``
 
 const ReviewList = styled.div`
-	padding: 3em 0;
+	padding: ${({ isDesktop }) => (isDesktop ? '3em 0 ' : '0 0 2em')};
 `
 
 const ReviewContent = styled.div`
@@ -485,6 +549,7 @@ const ReviewContent = styled.div`
 `
 
 const S = {
+	Skeleton,
 	Wrapper,
 	Visual,
 	BackGround,

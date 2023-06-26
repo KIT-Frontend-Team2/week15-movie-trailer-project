@@ -32,6 +32,12 @@ const InnerBox = styled.div`
 	padding: 10px;
 	align-items: center;
 	justify-content: center;
+	width: 100%;
+	overflow: scroll;
+	-ms-overflow-style: none;
+	::-webkit-scrollbar {
+		display: none;
+	}
 `
 
 const MenuButton = styled.div`

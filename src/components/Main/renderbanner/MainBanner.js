@@ -11,66 +11,70 @@ import { selectApiTypeAtom } from 'atom/ui.atom'
 import { useRecoilValue } from 'recoil'
 import useDetailNavigate from 'hooks/use-detail-navigate'
 import { Autoplay, EffectFade, Pagination } from 'swiper'
+import { useDevice } from '../../../hooks/use-device'
 
 const MainBanner = ({ posters }) => {
 	const typeSelect = useRecoilValue(selectApiTypeAtom)
 	const navigate = useDetailNavigate()
+	const { isMobile } = useDevice()
 	return (
 		<>
-			<Swiper
-				spaceBetween={30}
-				effect={'fade'}
-				autoplay={{
-					delay: 5000,
-					disableOnInteraction: false,
-				}}
-				pagination={{
-					clickable: true,
-				}}
-				modules={[Autoplay, EffectFade, Pagination]}
-				className="mySwiper"
-			>
-				{posters.map((poster, index) => {
-					const {
-						id,
-						poster_path,
-						backdrop_path,
-						title,
-						overview,
-						release_date,
-					} = poster
-					const back_url = TMDB_URL + backdrop_path
-					const post_url = TMDB_URL + poster_path
-					return (
-						<SwiperSlide key={index}>
-							<BackGround img_src={back_url} />
-							<InnerBox>
-								<CardMedia
-									onClick={() => {
-										navigate(id)
-									}}
-									component="img"
-									image={post_url}
-									sx={{
-										minWidth: '200px',
-										maxWidth: '400px',
-										cursor: 'pointer',
-									}}
-								/>
-								<TextMedia>
-									<IntroduceText>
-										<div>
-											<TitleText>{title}</TitleText>
-											<OverViewText>{overview}</OverViewText>
-										</div>
-										<MakeDateText>create at {release_date}</MakeDateText>
-									</IntroduceText>
-								</TextMedia>
-							</InnerBox>
-						</SwiperSlide>
-					)
-				})}
-			</Swiper>
+			{!isMobile && (
+				<Swiper
+					spaceBetween={30}
+					effect={'fade'}
+					autoplay={{
+						delay: 5000,
+						disableOnInteraction: false,
+					}}
+					pagination={{
+						clickable: true,
+					}}
+					modules={[Autoplay, EffectFade, Pagination]}
+					className="mySwiper"
+				>
+					{posters.map((poster, index) => {
+						const {
+							id,
+							poster_path,
+							backdrop_path,
+							title,
+							overview,
+							release_date,
+						} = poster
+						const back_url = TMDB_URL + backdrop_path
+						const post_url = TMDB_URL + poster_path
+						return (
+							<SwiperSlide key={index}>
+								<BackGround img_src={back_url} />
+								<InnerBox>
+									<CardMedia
+										onClick={() => {
+											navigate(id)
+										}}
+										component="img"
+										image={post_url}
+										sx={{
+											minWidth: '200px',
+											maxWidth: '400px',
+											cursor: 'pointer',
+										}}
+									/>
+									<TextMedia>
+										<IntroduceText>
+											<div>
+												<TitleText>{title}</TitleText>
+												<OverViewText>{overview}</OverViewText>
+											</div>
+											<MakeDateText>create at {release_date}</MakeDateText>
+										</IntroduceText>
+									</TextMedia>
+								</InnerBox>
+							</SwiperSlide>
+						)
+					})}
+				</Swiper>
+			)}
 			<TitleHeader>{typeSelect.split('/')[1] + ' MOVIES'}</TitleHeader>
 		</>
 	)

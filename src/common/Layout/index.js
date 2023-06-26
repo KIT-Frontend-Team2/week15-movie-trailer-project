@@ -13,23 +13,27 @@ const Layout = () => {
 	const navigate = useNavigate()
 	const isDetail = useDetailLocation()
 	return (
-		<>
+		<S.Wrapper>
 			<Header />
 			<ToolBar />
-			<S.Wrapper>
+			<S.Container>
 				<S.Box isDetail={isDetail} showToggle={showToggle}>
 					<Outlet />
 				</S.Box>
-			</S.Wrapper>
+			</S.Container>
 			<ScrollUp />
 			<Footer />
-		</>
+		</S.Wrapper>
 	)
 }
 
 export default Layout
 
 const Wrapper = styled.div`
+	overflow: hidden;
+`
+
+const Container = styled.div`
 	width: 100%;
 	height: auto;
 	background-color: #252c41;
@@ -41,4 +45,4 @@ const Box = styled.div`
 	color: white;
 `
 
-const S = { Wrapper, Box }
+const S = { Wrapper, Container, Box }

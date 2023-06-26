@@ -8,6 +8,7 @@ import randomArray from 'utils/random-array-index-helper'
 import { useNavigate } from 'react-router-dom'
 import API_KEYWORD from 'consts/apiKeyword'
 import { useEffect } from 'react'
+import { useDevice } from '../../../hooks/use-device'
 
 const CardList = () => {
 	const navigate = useNavigate()
@@ -17,6 +18,7 @@ const CardList = () => {
 
 	const selectApiKeyword = useRecoilValue(selectApiTypeAtom)
 	const { data, isLoading } = useGetList(selectApiKeyword)
+	const { isDesktop, isMobile, isTablet } = useDevice()
 	if (isLoading && !data) return <div>로딩중</div>
 	const list = data.data.results
 	const slideCount = 5
@@ -25,7 +27,7 @@ const CardList = () => {
 		<>
 			<MainBanner posters={posters} />
 			<Box sx={{ flexGrow: 1 }}>
-				<Grid container columns={{ xs: 4 }}>
+				<Grid container columns={{ xs: isMobile ? 1 : isTablet ? 3 : 4 }}>
 					{data.data.results.map(list => {
 						return (
 							<Grid key={list.id} item xs={1} sx={{ padding: '20px' }}>

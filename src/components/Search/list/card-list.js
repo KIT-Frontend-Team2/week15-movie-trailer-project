@@ -3,13 +3,19 @@ import UseObserver from 'hooks/use-observer'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import OneCard from './one-card'
+import SearchSkeletonPage from '../Skeleton/Search-Skeleton-page'
 
 const CardList = () => {
 	const { keyword } = useParams()
 	const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
 		useSearchKeyWord(keyword)
 
-	if (!data && isLoading) return <div>로딩중</div>
+	if (!data && isLoading)
+		return (
+			<div>
+				<SearchSkeletonPage />
+			</div>
+		)
 	console.log(data)
 	const results = data.pages.flatMap(pageData => pageData.data.results)
 	return (
@@ -23,12 +29,11 @@ const CardList = () => {
 				{results.map(data => (
 					<OneCard key={data.id} data={data} />
 				))}
-			</CardLists>
+			</S.CardLists>
 			<UseObserver
 				onClick={() => fetchNextPage()}
 				disabled={!hasNextPage || isFetchingNextPage}
 			></UseObserver>
-			</S.CardLists>
 		</>
 	)
 }

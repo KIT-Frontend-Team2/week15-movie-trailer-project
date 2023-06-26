@@ -10,7 +10,7 @@ const UseObserver = ({ onClick, isFetchingNextPage }) => {
 				}
 			}}
 		>
-			{isFetchingNextPage ? 'Loading more...' : 'Load More'}
+			{isFetchingNextPage ? 'Loading more...' : ''}
 		</InView>
 	)
 }

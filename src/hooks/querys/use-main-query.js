@@ -8,6 +8,7 @@ export const useGetList = API_KEY => {
 			[API_KEY],
 			({ pageParam = 1 }) => MOVIE_API.getList(API_KEY, pageParam),
 			{
+				...queryConfig,
 				getNextPageParam: lastPage => {
 					if (lastPage && lastPage.data.page) {
 						return lastPage.data.page + 1

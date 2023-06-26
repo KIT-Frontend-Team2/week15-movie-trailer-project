@@ -1,27 +1,39 @@
 import { useSearchKeyWord } from 'hooks/querys/use-main-query'
+import UseObserver from 'hooks/use-observer'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import OneCard from './one-card'
+import SearchSkeletonPage from '../Skeleton/Search-Skeleton-page'
 
 const CardList = () => {
 	const { keyword } = useParams()
-	const { data, isLoading } = useSearchKeyWord(keyword)
+	const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+		useSearchKeyWord(keyword)
 
-	if (!data) return <div>로딩중</div>
+	if (!data && isLoading)
+		return (
+			<div>
+				<SearchSkeletonPage />
+			</div>
+		)
 	console.log(data)
-	const { results } = data.data
+	const results = data.pages.flatMap(pageData => pageData.data.results)
 	return (
 		<>
-			<Title>
+			<S.Title>
 				{results.length !== 0
 					? `This is the search result of the "${keyword}".`
 					: `No results were found for "${keyword}"`}
-			</Title>
-			<CardLists>
+			</S.Title>
+			<S.CardLists>
 				{results.map(data => (
 					<OneCard key={data.id} data={data} />
 				))}
-			</CardLists>
+			</S.CardLists>
+			<UseObserver
+				onClick={() => fetchNextPage()}
+				disabled={!hasNextPage || isFetchingNextPage}
+			></UseObserver>
 		</>
 	)
 }
@@ -40,3 +52,8 @@ const CardLists = styled.div`
 	gap: 20px;
 	padding: 30px;
 `
+
+const S = {
+	Title,
+	CardLists,
+}

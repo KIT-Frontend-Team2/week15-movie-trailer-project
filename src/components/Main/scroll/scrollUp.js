@@ -27,9 +27,9 @@ const ScrollUp = () => {
 		setBtnStatus(false) // btn 값을 false로 바꿔 버튼 숨김
 	}
 
-	useEffect(() => {
-		console.log('scroll is', scroll) // scroll이 변할 때마다 값을 콘솔에 출력
-	}, [scroll])
+	// useEffect(() => {
+	// 	console.log('scroll is', scroll) // scroll이 변할 때마다 값을 콘솔에 출력
+	// }, [scroll])
 
 	useEffect(() => {
 		const watch = () => {

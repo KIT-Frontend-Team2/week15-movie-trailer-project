@@ -10,8 +10,7 @@ const randomArray = (array, length) => {
 		newArrayIndex.push(...deleteArray)
 		count++
 	}
-	const newArray = newArrayIndex.map(value => array[value])
-	return newArray
+	return newArrayIndex.map(value => array[value])
 }
 
 export default randomArray

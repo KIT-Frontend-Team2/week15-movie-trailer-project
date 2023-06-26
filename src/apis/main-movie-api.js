@@ -1,13 +1,18 @@
 const { axiosInstance, searchAxios } = require('apis/@core')
 
-const getList = API_KEY => {
-	return axiosInstance.get(API_KEY)
+const getList = (API_KEY, pageParam) => {
+	return axiosInstance.get(API_KEY, {
+		params: {
+			page: pageParam,
+		},
+	})
 }
 
-const getSearchWithKeyWord = query => {
+const getSearchWithKeyWord = (query, pageParam) => {
 	return searchAxios.get('', {
 		params: {
 			query,
+			page: pageParam,
 		},
 	})
 }

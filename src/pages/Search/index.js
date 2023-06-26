@@ -1,6 +1,6 @@
 import { Container } from '@mui/system'
-import CardList from 'components/Search/list/card-list'
 import styled from 'styled-components'
+import CardList from '../../components/Search/list/card-list'
 
 const SearchPage = () => {
 	return (

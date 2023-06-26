@@ -14,12 +14,12 @@ const CardList = () => {
 	const results = data.pages.flatMap(pageData => pageData.data.results)
 	return (
 		<>
-			<Title>
+			<S.Title>
 				{results.length !== 0
 					? `This is the search result of the "${keyword}".`
 					: `No results were found for "${keyword}"`}
-			</Title>
-			<CardLists>
+			</S.Title>
+			<S.CardLists>
 				{results.map(data => (
 					<OneCard key={data.id} data={data} />
 				))}
@@ -28,6 +28,7 @@ const CardList = () => {
 				onClick={() => fetchNextPage()}
 				disabled={!hasNextPage || isFetchingNextPage}
 			></UseObserver>
+			</S.CardLists>
 		</>
 	)
 }
@@ -46,3 +47,8 @@ const CardLists = styled.div`
 	gap: 20px;
 	padding: 30px;
 `
+
+const S = {
+	Title,
+	CardLists,
+}

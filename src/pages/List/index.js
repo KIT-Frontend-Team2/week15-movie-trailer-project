@@ -1,12 +1,20 @@
 import { Container } from '@mui/system'
-import CardList from 'components/Main/list/card-list'
+import styled from 'styled-components'
+import CardList from '../../components/Main/list/card-list'
 
 const ListPage = () => {
 	return (
-		<Container>
-			<CardList />
-		</Container>
+		<Wrapper>
+			<Container>
+				<CardList />
+			</Container>
+		</Wrapper>
 	)
 }
 
 export default ListPage
+
+const Wrapper = styled.div`
+	width: 100%;
+	min-height: calc(100vh - 135px);
+`

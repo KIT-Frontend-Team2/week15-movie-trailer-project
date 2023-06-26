@@ -2,6 +2,7 @@ import { Container } from '@mui/material'
 import TMDB_URL from 'consts/tmdbUrl'
 import useDetailNavigate from 'hooks/use-detail-navigate'
 import styled from 'styled-components'
+import { useDevice } from '../../../hooks/use-device'
 
 const OneCard = ({ data }) => {
 	let {
@@ -17,25 +18,34 @@ const OneCard = ({ data }) => {
 	if (backdrop_path == null) {
 		backdrop_path = poster_path
 	}
+	const { isMobile, isTablet, isDesktop } = useDevice()
 	const backdrop_url = TMDB_URL + backdrop_path
 	const poster_url = TMDB_URL + poster_path
 	return (
 		<Container sx={{ overflow: 'hidden' }}>
 			<Card onClick={() => navigate(id)} backdrop_path={backdrop_url}>
 				<InnerBox>
-					<Poster poster_path={poster_url} />
-					<TitleBox>
-						<Title>{title}</Title>
-						<CreateAt>create_at {release_date}</CreateAt>
-						<OverView>{overview}</OverView>
-						<Score>
-							<svg>
-								<text textAnchor="end" x="100" y="0">
-									<tspan dy="1em">{Math.round(vote_average * 10) / 10}</tspan>
-								</text>
-							</svg>
-						</Score>
-					</TitleBox>
+					{!isMobile ? (
+						<>
+							<Poster poster_path={poster_url} />
+							<TitleBox>
+								<Title>{title}</Title>
+								<CreateAt>create_at {release_date}</CreateAt>
+								<OverView>{overview}</OverView>
+								<Score>
+									<svg>
+										<text textAnchor="end" x="100" y="0">
+											<tspan dy="1em">
+												{Math.round(vote_average * 10) / 10}
+											</tspan>
+										</text>
+									</svg>
+								</Score>
+							</TitleBox>
+						</>
+					) : (
+						<OverViewMobile>{title}</OverViewMobile>
+					)}
 				</InnerBox>
 			</Card>
 		</Container>
@@ -69,6 +79,19 @@ const OverView = styled.div`
 	-webkit-line-clamp: 3;
 	-webkit-box-orient: vertical;
 	color: rgba(255, 255, 255, 0.5);
+`
+
+const OverViewMobile = styled.div`
+	position: relative;
+	margin: auto;
+	line-height: 25px;
+	font-size: 18px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	color: rgb(255, 255, 255);
+	overflow: hidden;
 `
 
 const Card = styled.div`
